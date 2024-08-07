@@ -1,35 +1,44 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { React,useState,useEffect } from 'react'
 
-function App() {
-  const [count, setCount] = useState(0)
+import { Outlet } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { login, logout } from './store/authSlice.js'
+import getAuthService from './services/auth.js'
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+export default function App() {
+  
+  const dispatch = useDispatch()
+  const [loading, setLoading] = useState(true)
+  useEffect(() => { 
+    getAuthService.getCurrentUser()
+    .then((user)=>{
+      
+      if(user.statusCode==200){
+        
+        dispatch(login(user))
+      }else{
+        dispatch(logout())
+      }
+    })
+    .finally(()=>{
+      console.log('finally')
+      setLoading(false)
+    })
+  }, [])
+  
+  return !loading ? (
+    <div className='min-h-screen flex flex-wrap content-between bg-slate-300'>
+      <div className='w-full block'>
+      
+        <main >
+         <Outlet />
+        </main>
+       
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </div>
+  ) : null
 }
 
-export default App
+
+
+
