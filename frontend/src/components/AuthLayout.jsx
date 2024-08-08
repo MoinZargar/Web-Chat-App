@@ -5,21 +5,21 @@ import { useDispatch,useSelector } from 'react-redux'
 
 export default function Protected({children,authentication = true}){
     
+
     const navigate=useNavigate()
     const[loader,setLoader]=useState(true)
     const authStatus=useSelector((state)=>state.auth.status)
     useEffect(()=>{
-    
-        if(!authStatus && authentication===true){
+        console.log(authStatus)
+        //authentication is required but user is not authenticated
+        if(authentication && authStatus!==authentication){
             navigate('/login')
         }
-        else if(authStatus && authentication===false){
+        //authentication is not required but user is authenticated
+        else if(!authentication && authStatus!==authentication){
             navigate('/chat')
         }
-        else{
-            setLoader(false)
-        } 
-
+        setLoader(false)
     },[authStatus,authentication,navigate])
     
     return loader ? <h1>Loading...</h1> : <>{children}</>

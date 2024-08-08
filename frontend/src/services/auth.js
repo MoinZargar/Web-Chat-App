@@ -20,16 +20,7 @@ class authentication{
             return error;
         }
    }
-   async getCurrentUser(){
-        try {
-            const response = await axios.get(`${config.apiBaseUrl}/user/current`,{withCredentials:true});
-            
-            return response.data;
-            
-        } catch (error) {
-            return error;
-        }
-   }
+ 
    async logout(){
        try {
         const response = await axios.get(`${config.apiBaseUrl}/auth/logout`,{withCredentials:true});
@@ -38,6 +29,17 @@ class authentication{
         return  error;
        }
    }
+
+   async getCurrentUser(){
+    try {
+        const response = await axios.get(`${config.apiBaseUrl}/user/current`,{withCredentials:true});
+        
+        return response.data;
+        
+    } catch (error) {
+        return error;
+    }
+}
     
 };
 

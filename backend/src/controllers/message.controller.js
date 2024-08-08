@@ -7,6 +7,7 @@ import { User } from "../models/user.model.js";
 import mongoose from "mongoose";
 
 const sendMessage = asyncHandler(async(req,res)=>{
+    
     const { message } = req.body
     const senderId = req.user?._id
     const recieverId = new mongoose.Types.ObjectId(req.params.id)

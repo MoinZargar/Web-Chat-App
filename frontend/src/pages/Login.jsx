@@ -1,11 +1,10 @@
 import { React, useState } from "react";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { login as StoreLogin } from "../store/authSlice.js";
 import { useDispatch } from "react-redux";
 import getAuthService from "../services/auth.js";
 
-// import {Button,Input} from '../index.jsx'
+
 
 function Login() {
   const dispatch = useDispatch();
@@ -21,10 +20,10 @@ function Login() {
  
     try {
       const response = await getAuthService.login({ email, password });
-
+      
       if (response.statusCode === 200) {
-        const userData = await getAuthService.getCurrentUser();
-
+        const userData = response.data.user;
+        
         dispatch(StoreLogin(userData));
         navigate("/");
       } else {

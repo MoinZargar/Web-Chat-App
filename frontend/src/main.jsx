@@ -5,7 +5,6 @@ import "./index.css";
 import { Provider } from "react-redux";
 import store from "../src/store/store.js";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-
 import Signup from "./pages/SignUp.jsx";
 import Login from "./pages/Login.jsx";
 import ChatWindow from "./pages/ChatWindow.jsx";
